@@ -1,47 +1,23 @@
 # Svelte + TS + Vite
+For the JS code, this project uses a combination of Svelte, TypeScript and Vite. These choices are personal favourites and you should be able to use different frameworks/bundlers/etc. if you want.
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
-
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
-
-## Need an official Svelte framework?
-
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
-
-## Technical considerations
-
-**Why use this over SvelteKit?**
-
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+# Installation
+With `npm` installed, install the required packages using
+```zsh
+npm install
 ```
+After this, you can run the development server using
+```zsh
+npm run dev
+```
+Or compile your website into a single `index.html` file using
+```zsh
+npm run build
+```
+In case you want to use the compiled, static website, be sure to update the constructor of the Plugin instance within the main `.cpp` file of the project.
+
+# Static HTML file vs. Webserver
+Normally, when using Vite to build your application, Vite will output a `.js` file and link it as a module within the generated `index.html` file. This means that you can only open your application using a webserver: when trying to open it as a file, you will run into `CORS` issues.
+To combat this, this project uses the [`vite-plugin-singlefile`](https://www.npmjs.com/package/vite-plugin-singlefile) plugin, which will place everything inline within the `index.html` file, allowing you to open your application without the need of a webserver. Keep in mind that this brings in some limitations. A list of known limitations can be found at the bottom of the [`vite-plugin-singlefile` npm page](https://www.npmjs.com/package/vite-plugin-singlefile).
+
+If you want to use something else than Vite, make sure there is an option to have a single `index.html` file with inline JS code to prevent headaches of having to open a webserver within iPlug.
