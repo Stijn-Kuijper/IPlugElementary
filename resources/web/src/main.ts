@@ -116,6 +116,9 @@ function onParamChangeUI(paramIdx: number, value: number): void {
 }
 globalThis.onParamChangeUI = onParamChangeUI;
 
+// We let the C++ code know our JS has loaded
+SendMsgToIPlug({"msg":"SAMFUI", "msgTag":1,"ctrlTag":-1})
+
 const app = new App({
   target: document.getElementById('app'),
 })
