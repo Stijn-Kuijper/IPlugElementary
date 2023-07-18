@@ -22,3 +22,4 @@ gui/*
 Icon?
 .DS_Stor*
 .vscode/
+resources/web/.vscode/
